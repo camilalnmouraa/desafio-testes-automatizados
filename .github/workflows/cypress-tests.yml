@@ -22,11 +22,18 @@ jobs:
           node-version: 18
 
       - name: Instalar Dependências
-        run: npm install
+        run: npm ci
+
+      - name: Debug - Verificar Diretório
+        run: pwd && ls -la
+      
+      - name: Debug - Verificar Arquivos
+        run: cat package.json
 
       - name: Rodar Testes E2E com Cypress
         uses: cypress-io/github-action@v6
         with:
+          working-directory: app
           command: npm run cypress:run
 
       - name: Armazenar Relatórios de Teste
