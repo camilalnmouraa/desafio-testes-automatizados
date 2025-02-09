@@ -1,0 +1,40 @@
+name: Cypress E2E Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do Código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Instalar Dependências
+        run: npm install
+
+      - name: Rodar Testes E2E com Cypress
+        uses: cypress-io/github-action@v6
+        with:
+          build: npm run build
+          start: npm start
+          wait-on: http://localhost:4300
+          command: npm run cypress:run
+
+      - name: Armazenar Relatórios de Teste
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: cypress-reports
+          path: cypress/reports
