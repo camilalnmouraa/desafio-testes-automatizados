@@ -33,7 +33,6 @@ jobs:
       - name: Rodar Testes E2E com Cypress
         uses: cypress-io/github-action@v6
         with:
-          working-directory: app
           command: npm run cypress:run
 
       - name: Armazenar Relatórios de Teste
