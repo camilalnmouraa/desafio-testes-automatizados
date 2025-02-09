@@ -34,7 +34,7 @@ jobs:
 
       - name: Armazenar Relatórios de Teste
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: cypress-reports
           path: cypress/reports
