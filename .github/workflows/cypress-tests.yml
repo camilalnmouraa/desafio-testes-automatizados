@@ -1,43 +1,12 @@
-name: Cypress E2E Tests
-
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-
+name: End-to-end tests 🧪
+on: push
 jobs:
   cypress-run:
-    runs-on: ubuntu-latest
-
+    runs-on: ubuntu-22.04
     steps:
-      - name: Checkout do Código
+      - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Configurar Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-
-      - name: Instalar Dependências
-        run: npm ci
-
-      - name: Debug - Verificar Diretório
-        run: pwd && ls -la
-      
-      - name: Debug - Verificar Arquivos
-        run: cat package.json
-
-      - name: Rodar Testes E2E com Cypress
+      - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          command: npm run cypress:run
-
-      - name: Armazenar Relatórios de Teste
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: cypress-reports
-          path: cypress/reports
+          command: npm test
