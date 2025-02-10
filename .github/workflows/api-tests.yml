@@ -1,0 +1,17 @@
+name: API Tests 🚀
+
+on: push
+
+jobs:
+  newman-run:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout código do repositório
+        uses: actions/checkout@v4
+
+      - name: Instalar dependências
+        run: npm install
+
+      - name: Rodar Testes da API com Newman
+        run: npm run test:api

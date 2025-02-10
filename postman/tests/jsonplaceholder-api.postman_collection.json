@@ -1,0 +1,300 @@
+{
+	"info": {
+		"_postman_id": "16b8ed7f-9761-4ccb-aed2-e9b4c431c1ce",
+		"name": "JSONPlaceholder API",
+		"description": "Esta collection contém testes automatizados para validar a API **JSONPlaceholder**, garantindo que os endpoints funcionam conforme esperado. Os testes incluem:\n\n**GET /users** → Verifica se a API retorna corretamente a lista de usuários, validando estrutura e status HTTP.  \n**POST /users** → Garante que uma nova criação de usuário retorna status `201 Created` com os campos esperados.  \n**POST /users (Erro 400 - Requisição Inválida)** → Simula uma requisição inválida e verifica se a API retorna `400 Bad Request`.  \n**POST /server-error (Erro 500 - Erro Interno do Servidor)** → Simula uma falha no servidor e verifica se a API retorna `500 Internal Server Error`.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26294898"
+	},
+	"item": [
+		{
+			"name": "Get Users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// ✅ Testa se a API responde corretamente (Status Code 200)\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// ✅ Verifica se a resposta é JSON\r",
+							"pm.test(\"Response is JSON\", function () {\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"// ✅ Valida se o JSON contém um array de usuários\r",
+							"pm.test(\"Users array is not empty\", function () {\r",
+							"    let jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.length).to.be.above(0);\r",
+							"});\r",
+							"\r",
+							"// ✅ Valida se os usuários contêm os campos esperados\r",
+							"pm.test(\"Users contain expected properties\", function () {\r",
+							"    let jsonData = pm.response.json();\r",
+							"    jsonData.forEach(user => {\r",
+							"        pm.expect(user).to.have.property(\"id\");\r",
+							"        pm.expect(user).to.have.property(\"name\");\r",
+							"        pm.expect(user).to.have.property(\"username\");\r",
+							"        pm.expect(user).to.have.property(\"email\");\r",
+							"        pm.expect(user).to.have.property(\"address\");\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/users",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"users"
+					]
+				},
+				"description": "Este endpoint retorna uma lista de usuários da API JSONPlaceholder.\n\n**Validações incluídas:**\n\n- **Status 200 OK** → Garante que a API responde corretamente.\n    \n- **Formato JSON** → Verifica se a resposta está no formato esperado.\n    \n- **Lista de usuários não vazia** → Confirma que há usuários cadastrados.\n    \n- **Campos obrigatórios** → Valida se cada usuário contém `id`, `name`, `username`, `email` e `address`."
+			},
+			"response": []
+		},
+		{
+			"name": "Post Users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// ✅ Testa se o POST retorna status 201 (Criado com sucesso)\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"// ✅ Valida se a resposta contém os campos enviados\r",
+							"pm.test(\"Response contains expected properties\", function () {\r",
+							"    let jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"name\", \"John Doe\");\r",
+							"    pm.expect(jsonData).to.have.property(\"username\", \"johndoe\");\r",
+							"    pm.expect(jsonData).to.have.property(\"email\", \"john.doe@example.com\");\r",
+							"    pm.expect(jsonData).to.have.property(\"id\"); // API gera um ID novo\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"John Doe\",\r\n  \"username\": \"johndoe\",\r\n  \"email\": \"john.doe@example.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/users",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"users"
+					]
+				},
+				"description": "Este endpoint permite a criação de um novo usuário na API JSONPlaceholder.\n\n**Validações incluídas:**\n\n- **Status 201 Created** → Confirma que o usuário foi criado com sucesso.\n    \n- **Formato JSON** → Verifica se a resposta está no formato esperado.\n    \n- **Campos retornados** → Garante que a resposta contém os mesmos dados enviados, além de um `id` gerado pela API."
+			},
+			"response": []
+		},
+		{
+			"name": "Mock - Invalid User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// ✅ Testa se a API retorna 400 quando os dados são inválidos\r",
+							"pm.test(\"Status code is 400 for invalid request\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"// ✅ Verifica se a resposta contém a chave de erro esperada\r",
+							"pm.test(\"Response contains error message\", function () {\r",
+							"    let jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"error\", \"Invalid request\");\r",
+							"    pm.expect(jsonData).to.have.property(\"message\", \"Missing required fields\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://fba23eab-0a17-4b35-a859-9ad52b6ab0c0.mock.pstmn.io/users",
+					"protocol": "https",
+					"host": [
+						"fba23eab-0a17-4b35-a859-9ad52b6ab0c0",
+						"mock",
+						"pstmn",
+						"io"
+					],
+					"path": [
+						"users"
+					]
+				},
+				"description": "Este endpoint simula uma requisição inválida, retornando um erro `400 Bad Request`.\n\n**Validações incluídas:**\n\n- **Status 400 Bad Request** → Confirma que a API rejeita requisições inválidas.\n    \n- **Formato JSON** → Verifica se a resposta está estruturada corretamente.\n    \n- **Mensagem de erro esperada** → Valida se a resposta contém os campos `error` e `message`, indicando o motivo da falha."
+			},
+			"response": [
+				{
+					"name": "example",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://fba23eab-0a17-4b35-a859-9ad52b6ab0c0.mock.pstmn.io/users",
+							"protocol": "https",
+							"host": [
+								"fba23eab-0a17-4b35-a859-9ad52b6ab0c0",
+								"mock",
+								"pstmn",
+								"io"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n  \"error\": \"Invalid request\",\r\n  \"message\": \"Missing required fields\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Mock - Server Error",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// ✅ Testa se a API retorna 500 quando ocorre um erro interno no servidor\r",
+							"pm.test(\"Status code is 500 for server error\", function () {\r",
+							"    pm.response.to.have.status(500);\r",
+							"});\r",
+							"\r",
+							"// ✅ Verifica se a resposta contém a chave de erro esperada\r",
+							"pm.test(\"Response contains server error message\", function () {\r",
+							"    let jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"error\", \"Internal Server Error\");\r",
+							"    pm.expect(jsonData).to.have.property(\"message\", \"Something went wrong on the server\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://fba23eab-0a17-4b35-a859-9ad52b6ab0c0.mock.pstmn.io/server-error",
+					"protocol": "https",
+					"host": [
+						"fba23eab-0a17-4b35-a859-9ad52b6ab0c0",
+						"mock",
+						"pstmn",
+						"io"
+					],
+					"path": [
+						"server-error"
+					]
+				},
+				"description": "Este endpoint simula um erro interno no servidor, retornando um status `500 Internal Server Error`.\n\n✅ **Validações incluídas:**\n\n- **Status 500 Internal Server Error** → Garante que a API responde corretamente a falhas internas.\n    \n- **Formato JSON** → Verifica se a resposta está estruturada corretamente.\n    \n- **Mensagem de erro esperada** → Valida se a resposta contém os campos `error` e `message`, indicando a falha do servidor."
+			},
+			"response": [
+				{
+					"name": "example 2",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://fba23eab-0a17-4b35-a859-9ad52b6ab0c0.mock.pstmn.io/server-error",
+							"protocol": "https",
+							"host": [
+								"fba23eab-0a17-4b35-a859-9ad52b6ab0c0",
+								"mock",
+								"pstmn",
+								"io"
+							],
+							"path": [
+								"server-error"
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n  \"error\": \"Internal Server Error\",\r\n  \"message\": \"Something went wrong on the server\"\r\n}"
+				}
+			]
+		}
+	]
+}

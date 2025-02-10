@@ -1,0 +1,17 @@
+{
+  "name": "testes-automatizados",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+  "test": "npx cypress run",
+  "cypress:open": "npx cypress open",
+  "test:api": "npx newman run postman/tests/jsonplaceholder-api.postman_collection.json"
+},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "cypress": "^14.0.2"
+  }
+}
