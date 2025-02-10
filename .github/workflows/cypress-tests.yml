@@ -6,7 +6,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: end-to-end
+
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
           command: npm test
+          working-directory: end-to-end
