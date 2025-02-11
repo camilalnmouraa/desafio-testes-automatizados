@@ -1,0 +1,19 @@
+name: Performance Tests ⚡
+
+on: push
+
+jobs:
+  k6-load-test:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout código do repositório
+        uses: actions/checkout@v4
+
+      - name: Instalar k6
+        run: |
+          sudo apt update
+          sudo apt install -y k6
+
+      - name: Rodar Teste de Performance
+        run: npm run test:load
