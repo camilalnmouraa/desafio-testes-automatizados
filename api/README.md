@@ -1,41 +1,38 @@
-# JSONPlaceholder API - Testes Automatizados
+# Testes de API
 
-Esta collection contém testes automatizados para validar a API **JSONPlaceholder**, garantindo que os endpoints funcionam conforme esperado.
+[![CI](https://github.com/camilalnmouraa/desafio-testes-automatizados/actions/workflows/api-tests.yml/badge.svg)](https://github.com/camilalnmouraa/desafio-testes-automatizados/actions)
 
-## Endpoints Testados
-
-### 1️⃣ **GET /users** - Listar Usuários  
-✔️ Valida se a API retorna corretamente a lista de usuários.  
-✔️ Verifica se a resposta contém os campos esperados (`id`, `name`, `username`, `email`, `address`).  
-✔️ Confirma que o status retornado é **200 OK**.  
-
-### 2️⃣ **POST /users** - Criar Usuário  
-✔️ Garante que uma nova criação de usuário retorna **201 Created**.  
-✔️ Valida se a resposta contém os dados enviados e um `id` gerado pela API.  
-
-### 3️⃣ **POST /users (Erro 400 - Requisição Inválida)**  
-✔️ Simula uma requisição sem campos obrigatórios e valida o retorno **400 Bad Request**.  
-✔️ Confirma que a resposta contém a mensagem de erro esperada.  
-
-### 4️⃣ **POST /server-error (Erro 500 - Erro Interno do Servidor)**  
-✔️ Simula um erro no servidor e garante que a API retorna **500 Internal Server Error**.  
-✔️ Verifica se a resposta contém os detalhes do erro.  
+Este diretório contém testes automatizados para validar a API **JSONPlaceholder**, garantindo que os endpoints funcionam conforme esperado.  
 
 ---
 
-## Como Executar os Testes
+## Pré-requisitos
 
-### **1. Rodar via Postman**
-1. Abra o **Postman**.
-2. Importe a Collection `JSONPlaceholder API.postman_collection.json`.
-3. Clique em **Run Collection** e execute todos os testes.
+Para executar os testes de API, você precisará dos seguintes sistemas instalados em seu computador:
 
+- [git](https://git-scm.com/downloads)
+- [Node.js](https://nodejs.org/en/)
+- [Postman](https://www.postman.com/downloads/) (opcional, para rodar manualmente)
+- [Newman](https://github.com/postmanlabs/newman) (para execução automatizada via linha de comando)
 
-### **2. Execute a Collection no terminal**
+## Instalação
 
-   ```sh
-   npm run test:api
+Para instalar as dependências de desenvolvimento, execute o comando:
+
+```sh
+npm install -g newman
 ```
+
+## Executando os testes de API
+
+No projeto, os testes podem ser executados com:
+
+```sh
+npm run test:api
+```
+
+Esse comando está definido no `package.json` e executa os testes via Newman.
+
 ___
 
 Feito com 🩵 e ☕ por [Camila Moura](https://www.linkedin.com/in/camilalnmoura/).
