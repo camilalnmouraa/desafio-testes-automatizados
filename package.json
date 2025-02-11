@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-  "test": "npx cypress run",
+  "test": "npx cypress run --config-file ui/cypress.config.js",
   "cypress:open": "npx cypress open",
   "test:api": "npx newman run api/postman/tests/jsonplaceholder-api.postman_collection.json"
 },
