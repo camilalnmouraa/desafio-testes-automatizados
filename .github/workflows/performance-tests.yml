@@ -10,10 +10,11 @@ jobs:
       - name: Checkout código do repositório
         uses: actions/checkout@v4
 
-      - name: Instalar k6 via binário
+      - name: Instalar k6
         run: |
-          curl -s https://packagecloud.io/install/repositories/loadimpact/k6/script.deb.sh | sudo bash
-          sudo apt install -y k6
+          sudo apt update
+          sudo snap install k6
+
 
 
       - name: Rodar Teste de Performance
