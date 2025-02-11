@@ -1,37 +1,40 @@
-# Teste de Performance com k6
+# Testes de Performance
 
-Este repositório contém um teste de carga utilizando [k6](https://k6.io/), uma ferramenta open-source para testes de performance.
+[![CI](https://github.com/camilalnmouraa/desafio-testes-automatizados/actions/workflows/performance-tests.yml/badge.svg)](https://github.com/camilalnmouraa/desafio-testes-automatizados/actions)
 
-## Descrição
+Este diretório contém testes de performance automatizados utilizando [k6](https://k6.io/).
 
-O teste simula múltiplos usuários acessando um endpoint para avaliar o desempenho da aplicação sob carga. O script executa as seguintes etapas:
+---
 
-1. **Aquecimento:** 10 usuários são adicionados gradualmente em 10 segundos.
-2. **Carga Sustentada:** 100 usuários simultâneos são mantidos por 20 segundos.
-3. **Encerramento:** A carga é reduzida até 0 usuários em 10 segundos.
+## Pré-requisitos
 
-O teste verifica:
-- Se as requisições retornam código HTTP `200`.
-- Se 95% das requisições são respondidas em menos de **500ms**.
-- Se a taxa de erro não ultrapassa **1%**.
+Para executar os testes de performance, você precisará dos seguintes sistemas instalados em seu computador:
 
-## Como Executar
+- [git](https://git-scm.com/downloads)
+- [Node.js](https://nodejs.org/en/)
+- [k6](https://k6.io/docs/getting-started/installation/)
 
-### Pré-requisitos
+## Instalação
 
-- Ter o [k6 instalado](https://k6.io/docs/getting-started/installation/).
-
-### Rodando o teste
-
-Execute o comando abaixo no terminal:
+Para instalar as dependências de desenvolvimento, execute o comando:
 
 ```sh
-k6 run load-test.js 
+npm install
 ```
 
-### Métricas Avaliadas
-- **Tempo de resposta:** O tempo de resposta das requisições deve ser menor que 500ms para 95% dos casos.
-- **Taxa de falha:** O percentual de falhas não deve exceder 1%.
+## Executando os testes de performance
+
+Os testes de carga podem ser executados utilizando o k6.
+
+### Rodando os testes
+
+Execute o comando :
+
+```sh
+npm run test:load
+```
+
+O teste simula múltiplos usuários acessando a aplicação e mede métricas como tempo de resposta e taxa de falhas.
 
 ___
 
