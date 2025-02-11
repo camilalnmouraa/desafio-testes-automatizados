@@ -1,6 +1,6 @@
 describe('Formulário de Cadastro', () => {
   beforeEach(() => {
-    cy.visit('/src/index.html');
+    cy.visit('ui/src/index.html');
   });
 
   it('Deve cadastrar com sucesso quando todos os campos são preenchidos corretamente', () => {

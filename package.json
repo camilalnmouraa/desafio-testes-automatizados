@@ -5,7 +5,7 @@
   "scripts": {
   "test": "npx cypress run",
   "cypress:open": "npx cypress open",
-  "test:api": "npx newman run postman/tests/jsonplaceholder-api.postman_collection.json"
+  "test:api": "npx newman run api/postman/tests/jsonplaceholder-api.postman_collection.json"
 },
   "keywords": [],
   "author": "",
