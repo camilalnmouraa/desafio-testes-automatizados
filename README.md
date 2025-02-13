@@ -22,7 +22,7 @@ Os testes são executados automaticamente via **GitHub Actions** a cada novo pus
 ### ✅ Testes End-to-End (E2E)
 - Executados com **Cypress** (`cypress-tests.yml`).
 - Validam o comportamento da aplicação de ponta a ponta.
-- Testam cenários reais como login, cadastro e fluxo de navegação.
+- Testa cenários do cadastro.
 
 ### ✅ Testes de Performance
 - Executados com **k6** (`performance-tests.yml`).
